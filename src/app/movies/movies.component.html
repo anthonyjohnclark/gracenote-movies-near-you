@@ -1,0 +1,36 @@
+<carousel
+  *ngIf="MovieShowings"
+  [itemsPerSlide]="itemsPerSlide"
+  [singleSlideOffset]="singleSlideOffset"
+  [interval]="false"
+  [noWrap]="Wrap"
+>
+  <slide
+    type="button"
+    class="btn btn-primary"
+    (click)="openModal(template)"
+    *ngFor="let slide of MovieShowings; let index = MovieShowings"
+    class="mx-auto"
+  >
+    <ng-template #template>
+      <movie-details [MovieID]="slide.MovieID"></movie-details>
+    </ng-template>
+    <img
+      src="{{ 'https://demo.tmsimg.com/' + slide.preferredImage.uri }}"
+      alt="slide.title"
+      style="display:block; 
+      width: 100%; 
+      padding:2%"
+    />
+    <div class="carousel-caption">
+      <h1 *ngFor="let ratings of slide.ratings">
+        {{ ratings.code }}
+      </h1>
+      <ul>
+        <li *ngFor="let showings of slide.showtimes">
+          {{ showings.dateTime | date: "shortTime" }}
+        </li>
+      </ul>
+    </div>
+  </slide>
+</carousel>
