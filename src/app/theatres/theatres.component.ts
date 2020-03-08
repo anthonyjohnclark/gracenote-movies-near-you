@@ -58,20 +58,4 @@ export class TheatresComponent implements OnChanges {
         );
     });
   }
-
-  // console.log(this.TheatreData);
-  // this.TheatreData.subscribe(data => {
-  //   console.log("Promise resolved with: " + data);
-  // }).catch(error => {
-  //   console.log("Promise rejected with " + JSON.stringify(error));
-  // });
-
-  //     }
-  //       .subscribe(data => {
-  //         this.TheatreData = data;
-  //       });
-  //     resolve(this.TheatreData);
-  //     reject(console.log("TheatreID unobtainable."));
-  //   });
-  // }
 }
