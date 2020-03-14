@@ -19,6 +19,7 @@ import { MoviesService } from "./movies/movies.service";
 import { TheatresService } from "./theatres/theatres.service";
 import { DetailsComponent } from "./details/details.component";
 import { DetailsService } from "./details/details.service";
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DetailsService } from "./details/details.service";
     LocationComponent,
     TheatresComponent,
     MoviesComponent,
-    DetailsComponent
+    DetailsComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

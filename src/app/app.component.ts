@@ -7,9 +7,5 @@ import { Component } from "@angular/core";
 })
 export class AppComponent {
   title = "movies-near-you";
-
   constructor() {}
-}
-export class CollapseNavBarAnimatedComponent {
-  isCollapsed = false;
 }
