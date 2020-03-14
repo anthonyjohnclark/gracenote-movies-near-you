@@ -1,6 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
+import { FormsModule } from "@angular/forms";
 
 // ngx Imports
 import { CollapseModule } from "ngx-bootstrap";
@@ -19,7 +20,7 @@ import { MoviesService } from "./movies/movies.service";
 import { TheatresService } from "./theatres/theatres.service";
 import { DetailsComponent } from "./details/details.component";
 import { DetailsService } from "./details/details.service";
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from "./navbar/navbar.component";
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
     CollapseModule.forRoot(),
     CarouselModule.forRoot(),
     ModalModule.forRoot()

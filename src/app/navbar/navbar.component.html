@@ -46,14 +46,13 @@
             id="radius"
             type="number"
             class="form-control"
-            ng-model="radius"
+            [ngModel]="radius"
             #RadiusInput
-            placeholder="20"
           />
           <div class="input-group-append ml-1 mr-2">
             <button
               class="btn btn-outline-secondary"
-              (click)="getRadius(userInput.value)"
+              (click)="getRadius(RadiusInput.value)"
               type="button"
             >
               Enter
@@ -64,4 +63,4 @@
     </ul>
   </div>
 </nav>
-<app-location></app-location>
+<app-location [radius]="radius"></app-location>

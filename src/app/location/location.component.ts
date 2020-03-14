@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, SimpleChanges, Input, OnChanges } from "@angular/core";
 import { LocationService } from "./location.service";
 
 @Component({
@@ -6,20 +6,19 @@ import { LocationService } from "./location.service";
   templateUrl: "./location.component.html",
   providers: [LocationService]
 })
-export class LocationComponent implements OnInit {
+export class LocationComponent implements OnChanges {
   lat: 0;
   long: 0;
-  radius: string;
+  @Input() radius: string;
   FormattedDate: string;
   cityName;
 
   constructor(private _LocationService: LocationService) {}
 
-  ngOnInit() {
-    this.getLocation();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes["radius"]) this.getLocation();
     this.getCityName();
     this.getDate();
-    this.getRadius();
   }
 
   getLocation() {
@@ -62,10 +61,5 @@ export class LocationComponent implements OnInit {
     var FormattedDate = CurrentDate.toISOString().split("T")[0];
     console.log(FormattedDate);
     this.FormattedDate = FormattedDate;
-  }
-  getRadius() {
-    var radius = "20";
-    console.log("Default radius is", radius);
-    this.radius = radius;
   }
 }
