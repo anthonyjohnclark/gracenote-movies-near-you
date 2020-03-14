@@ -1,4 +1,10 @@
-import { Component, SimpleChanges, Input, OnChanges } from "@angular/core";
+import {
+  Component,
+  SimpleChanges,
+  Input,
+  OnChanges,
+  OnInit
+} from "@angular/core";
 import { LocationService } from "./location.service";
 
 @Component({
@@ -6,19 +12,23 @@ import { LocationService } from "./location.service";
   templateUrl: "./location.component.html",
   providers: [LocationService]
 })
-export class LocationComponent implements OnChanges {
+export class LocationComponent implements OnChanges, OnInit {
   lat: 0;
   long: 0;
-  @Input() radius: string;
+  @Input() radius: number;
+  @Input() zipCode: number;
   FormattedDate: string;
   cityName;
 
   constructor(private _LocationService: LocationService) {}
 
+  ngOnInit() {
+    this.getDate();
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes["radius"]) this.getLocation();
     this.getCityName();
-    this.getDate();
   }
 
   getLocation() {

@@ -25,13 +25,18 @@
             <span class="input-group-text">Zip Code</span>
           </div>
           <input
-            id="zip code"
+            id="zipCode"
             type="number"
             class="form-control"
-            ng-model="zip-code"
+            [ngModel]="zipCode"
+            #ZipCodeInput
           />
           <div class="input-group-append ml-1 mr-2">
-            <button class="btn btn-outline-secondary" type="button">
+            <button
+              class="btn btn-outline-secondary"
+              (click)="getZip(ZipCodeInput.value)"
+              type="button"
+            >
               Enter
             </button>
           </div>
@@ -63,4 +68,4 @@
     </ul>
   </div>
 </nav>
-<app-location [radius]="radius"></app-location>
+<app-location [radius]="radius" [zipCode]="zipCode"></app-location>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-navbar",
@@ -10,12 +9,21 @@ export class NavbarComponent implements OnInit {
   constructor() {}
 
   radius = 20;
+  zipCode = null;
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("Default radius is", this.radius);
+    console.log("ZipCode entered is", this.zipCode);
+  }
 
   getRadius(value: number): void {
     this.radius = value;
     console.log("Default radius is", this.radius);
+  }
+
+  getZip(value: number): void {
+    this.zipCode = value;
+    console.log("ZipCode entered is", this.zipCode);
   }
 }
 export class CollapseNavBarAnimatedComponent {
