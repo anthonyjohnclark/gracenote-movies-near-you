@@ -25,7 +25,7 @@ export class TheatresComponent implements OnChanges {
   @Input() TheatreRadius: string;
 
   ngOnChanges(changes: SimpleChanges) {
-    if ((changes["TheatreLat"], ["TheatreLong"])) {
+    if ((changes["TheatreLat"], ["TheatreLong"], ["TheatreRadius"])) {
       this.getTheatreData();
     }
   }

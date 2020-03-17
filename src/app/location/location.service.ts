@@ -17,4 +17,17 @@ export class LocationService {
 
     return this.http.get(this.url, { params });
   }
+
+  zipUrl = "https://us1.locationiq.com/v1/search.php?";
+  countrycodes = "US";
+
+  getLatLongByZip(zipCode) {
+    let params = new HttpParams()
+      .set("key", environment.GeoApiKey)
+      .set("postalcode", zipCode)
+      .set("countrycodes", this.countrycodes)
+      .set("format", this.format);
+
+    return this.http.get(this.zipUrl, { params });
+  }
 }
