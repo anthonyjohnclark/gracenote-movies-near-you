@@ -110,7 +110,7 @@ export class NavbarComponent implements OnInit {
     console.log("New zip lat is:", this.lat);
     this.long = long;
     console.log("New zip long is:", this.long);
-    await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
     this._NavBarService
       .getCityNameByZipCoords(this.lat, this.long)
       .subscribe(data => (this.cityName = data));

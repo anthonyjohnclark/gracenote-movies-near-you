@@ -5,7 +5,7 @@ class Theatres {
   constructor(
     public theatreId: number,
     public name: string,
-    public location: string
+    public location: number
   ) {}
 }
 

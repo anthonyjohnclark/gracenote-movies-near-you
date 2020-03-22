@@ -1,10 +1,10 @@
 <div *ngFor="let element of TheatreData" class="container-fluid">
   <div class="row bg-dark page-header text-light">
-    <div class="col-11 mt-auto mb-auto ">
+    <div class="col-10 mt-auto mb-auto ">
       <h2>{{ element.name }}</h2>
     </div>
     <div class="col-2 mt-auto mb-auto ">
-      <p>{{ element.location }} miles away</p>
+      <p>{{ element.location | number: "1.1-1" }} miles away</p>
     </div>
   </div>
   <app-movies
