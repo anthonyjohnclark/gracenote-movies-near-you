@@ -30,6 +30,7 @@
             class="form-control"
             [ngModel]="zipCode"
             #ZipCodeInput
+            (keyup.enter)="getZip(ZipCodeInput.value)"
           />
           <div class="input-group-append ml-1 mr-2">
             <button
@@ -53,6 +54,7 @@
             class="form-control"
             [ngModel]="radius"
             #RadiusInput
+            (keyup.enter)="getRadius(RadiusInput.value)"
           />
           <div class="input-group-append ml-1 mr-2">
             <button
