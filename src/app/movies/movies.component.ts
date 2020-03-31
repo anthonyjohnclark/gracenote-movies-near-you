@@ -90,7 +90,7 @@ export class MoviesComponent implements OnChanges {
 
   itemsPerSlide = 5;
   singleSlideOffset = true;
-  noWrap = true;
+  noWrap = false;
 
   openModal(template: TemplateRef<DetailsComponent>) {
     this.modalRef = this.modalService.show(template, {

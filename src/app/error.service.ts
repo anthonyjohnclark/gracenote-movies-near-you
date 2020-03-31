@@ -14,7 +14,7 @@ export class ErrorService implements ErrorHandler {
       console.error("Hey this is a TypeError");
     } else {
       this.alertService.danger("An unknown error occured.");
-      console.error(error);
+      console.error("An unknown error occured.");
     }
     router.navigate(["error"]);
   }
