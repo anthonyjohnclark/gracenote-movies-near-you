@@ -4,7 +4,7 @@ import { NavbarService } from "./navbar.service";
 @Component({
   selector: "app-navbar",
   templateUrl: "./navbar.component.html",
-  styleUrls: ["./navbar.component.css"]
+  styleUrls: ["./navbar.component.css"],
 })
 export class NavbarComponent implements OnInit {
   constructor(private _NavBarService: NavbarService) {}
@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   lat;
   long;
   cityName;
+  isCollapsed = false;
 
   ngOnInit() {
     this.getDate();
@@ -32,13 +33,12 @@ export class NavbarComponent implements OnInit {
         function resolveLocation(position) {
           var coordinates = {
             latitude: position.coords.latitude,
-            longitude: position.coords.longitude
+            longitude: position.coords.longitude,
           };
           resolve(coordinates);
         },
-        function resolveError(error) {
-          var errorMessage = error;
-          reject("Geolocation error: " + errorMessage);
+        (error) => {
+          reject(error);
         }
       );
     });
@@ -56,7 +56,7 @@ export class NavbarComponent implements OnInit {
     console.log("User latitude is:", lat);
     this._NavBarService
       .getCityNameByCoords(lat, long)
-      .subscribe(data => (this.cityName = data));
+      .subscribe((data) => (this.cityName = data));
     this.cityName = cityName;
   }
 
@@ -93,7 +93,7 @@ export class NavbarComponent implements OnInit {
             resolve(CoordsByZipCode);
             console.log(CoordsByZipCode);
           },
-          err => {
+          (err) => {
             reject(err);
           }
         );
@@ -110,14 +110,16 @@ export class NavbarComponent implements OnInit {
     console.log("New zip lat is:", this.lat);
     this.long = long;
     console.log("New zip long is:", this.long);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     this._NavBarService
       .getCityNameByZipCoords(this.lat, this.long)
-      .subscribe(data => (this.cityName = data));
+      .subscribe((data) => (this.cityName = data));
     this.cityName = cityName;
+  }
+
+  Collapse() {
+    this.isCollapsed = !this.isCollapsed;
   }
 }
 
-export class CollapseNavBarAnimatedComponent {
-  isCollapsed = false;
-}
+export class CollapseNavBarAnimatedComponent {}

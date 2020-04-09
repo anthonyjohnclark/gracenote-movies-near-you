@@ -9,10 +9,18 @@ class Theatres {
   ) {}
 }
 
+class NoTheatreFound extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "NoTheatreFound";
+    this.message = message;
+  }
+}
+
 @Component({
   selector: "app-theatres",
   templateUrl: "./theatres.component.html",
-  providers: [TheatresService]
+  providers: [TheatresService],
 })
 export class TheatresComponent implements OnChanges {
   constructor(private _TheatresService: TheatresService) {}
@@ -42,17 +50,21 @@ export class TheatresComponent implements OnChanges {
         .toPromise()
         .then(
           (res: any) => {
-            this.TheatreData = res.map(data => {
-              return new Theatres(
-                data.theatreId,
-                data.name,
-                data.location.distance
-              );
-            });
-            resolve(this.TheatreData);
-            console.log(this.TheatreData);
+            if (res == null) {
+              throw new NoTheatreFound("Can't find any theatres.");
+            } else {
+              this.TheatreData = res.map((data) => {
+                return new Theatres(
+                  data.theatreId,
+                  data.name,
+                  data.location.distance
+                );
+              });
+              resolve(this.TheatreData);
+              console.log(this.TheatreData);
+            }
           },
-          err => {
+          (err) => {
             reject(err);
           }
         );

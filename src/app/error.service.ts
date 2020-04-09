@@ -3,21 +3,46 @@ import { Router } from "@angular/router";
 import { AlertService } from "ngx-alerts";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class ErrorService implements ErrorHandler {
   constructor(private injector: Injector, private alertService: AlertService) {}
 
   handleError(error: any) {
     const router = this.injector.get(Router);
-    if (error instanceof TypeError) {
-      console.error("Hey this is a TypeError");
-    } else {
-      this.alertService.danger("An unknown error occured.");
-      console.error("An unknown error occured.");
+
+    if (error.promise && error.rejection) {
+      // Promise rejection wrapped by zone.js
+      error = error.rejection;
     }
+    if (error.message == "User denied Geolocation") {
+      this.alertService.info(
+        "Please enter a zip code or enable geolocation to find movies."
+      );
+      console.error(error);
+    } else if (error.message == "Can't find any theatres.") {
+      this.alertService.danger(
+        "We couldn't find any theatres within this radius. Try expanding your radius or entering a new zip code."
+      );
+      console.error(error);
+    } else if (
+      error.message.match(
+        "Http failure response for https://us1.locationiq.com/"
+      )
+    ) {
+      this.alertService.danger(
+        "Looks like we can't find the zip code you entered. Try enabling your location or entering another zip code."
+      );
+      console.error("Here be an HTTP error Response from LocationIq");
+      console.error(error.message);
+    } else {
+      this.alertService.warning("An unknown error has occurred.");
+      console.error(error);
+    }
+
     router.navigate(["error"]);
   }
+
   showAlerts(): void {
     // For normal messages
     this.alertService.info("this is an info alert");

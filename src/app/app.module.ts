@@ -1,6 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule, ErrorHandler } from "@angular/core";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { AppRoutingModule } from "./app-routing.module";
 
@@ -24,6 +24,7 @@ import { NavbarComponent } from "./navbar/navbar.component";
 import { NavbarService } from "./navbar/navbar.service";
 import { ErrorService } from "./error.service";
 import { ErrorComponent } from "./error/error.component";
+import { InterceptorService } from "./services/interceptor.service";
 
 @NgModule({
   declarations: [
@@ -54,6 +55,11 @@ import { ErrorComponent } from "./error/error.component";
     {
       provide: ErrorHandler,
       useClass: ErrorService
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
     }
   ],
   bootstrap: [AppComponent],

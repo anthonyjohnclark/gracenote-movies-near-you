@@ -19,7 +19,7 @@ class MovieDetails {
 @Component({
   selector: "movie-details",
   templateUrl: "./details.component.html",
-  styleUrls: ["./details.component.css"]
+  styleUrls: ["./details.component.css"],
 })
 @Injectable({ providedIn: "root" })
 export class DetailsComponent implements AfterContentInit {
@@ -52,7 +52,7 @@ export class DetailsComponent implements AfterContentInit {
       this.detailsURL = url;
       resolve(this.detailsURL);
       console.log(this.detailsURL),
-        err => {
+        (err) => {
           reject(err);
         };
     });
@@ -65,7 +65,7 @@ export class DetailsComponent implements AfterContentInit {
       this.imageURL = url;
       resolve(this.imageURL);
       console.log(this.imageURL),
-        err => {
+        (err) => {
           reject(err);
         };
     });
@@ -87,7 +87,7 @@ export class DetailsComponent implements AfterContentInit {
             console.log(this.MovieImages);
             console.log(this.BannerImage.uri);
           },
-          err => {
+          (err) => {
             reject(err);
           }
         );
@@ -103,7 +103,7 @@ export class DetailsComponent implements AfterContentInit {
         .then(
           (res: any) => {
             this.MovieArray.push(res);
-            this.MovieData = this.MovieArray.map(data => {
+            this.MovieData = this.MovieArray.map((data) => {
               return new MovieDetails(
                 data.title,
                 data.releaseYear,
@@ -119,7 +119,7 @@ export class DetailsComponent implements AfterContentInit {
             console.log(this.MovieData[0].Cast);
             console.log(this.MovieArray);
           },
-          err => {
+          (err) => {
             reject(err);
           }
         );
