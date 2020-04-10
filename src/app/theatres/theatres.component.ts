@@ -39,35 +39,38 @@ export class TheatresComponent implements OnChanges {
   }
 
   getTheatreData() {
-    return new Promise((resolve, reject) => {
-      this._TheatresService
-        .getTheatres(
-          this.TheatreFormattedDate,
-          this.TheatreLat,
-          this.TheatreLong,
-          this.TheatreRadius
-        )
-        .toPromise()
-        .then(
-          (res: any) => {
-            if (res == null) {
-              throw new NoTheatreFound("Can't find any theatres.");
-            } else {
-              this.TheatreData = res.map((data) => {
-                return new Theatres(
-                  data.theatreId,
-                  data.name,
-                  data.location.distance
-                );
-              });
-              resolve(this.TheatreData);
-              console.log(this.TheatreData);
+    if (this.TheatreLat != null) {
+      return new Promise((resolve, reject) => {
+        this._TheatresService
+          .getTheatres(
+            this.TheatreFormattedDate,
+            this.TheatreLat,
+            this.TheatreLong,
+            this.TheatreRadius
+          )
+          .toPromise()
+          .then(
+            (res: any) => {
+              if (res == null) {
+                resolve((this.TheatreData = null));
+                throw new NoTheatreFound("Can't find any theatres.");
+              } else {
+                this.TheatreData = res.map((data) => {
+                  return new Theatres(
+                    data.theatreId,
+                    data.name,
+                    data.location.distance
+                  );
+                });
+                resolve(this.TheatreData);
+                console.log(this.TheatreData);
+              }
+            },
+            (err) => {
+              reject(err);
             }
-          },
-          (err) => {
-            reject(err);
-          }
-        );
-    });
+          );
+      });
+    }
   }
 }

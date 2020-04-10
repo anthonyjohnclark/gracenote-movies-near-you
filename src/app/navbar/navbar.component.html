@@ -28,15 +28,19 @@
           <input
             id="zipCode"
             type="number"
+            placeholder="Current Location"
             class="form-control"
             [ngModel]="zipCode"
             #ZipCodeInput
-            (keyup.enter)="getZip(ZipCodeInput.value)"
+            (keyup.enter)="
+              getZip(ZipCodeInput.value); getRadius(RadiusInput.value)
+            "
+            maxlength="5"
           />
           <div class="input-group-append ml-1 mr-2">
             <button
               class="btn btn-outline-secondary"
-              (click)="getZip(ZipCodeInput.value)"
+              (click)="getZip(ZipCodeInput.value); getRadius(RadiusInput.value)"
               type="button"
             >
               Enter
@@ -51,16 +55,20 @@
           </div>
           <input
             id="radius"
+            value="20"
             type="number"
             class="form-control"
             [ngModel]="radius"
             #RadiusInput
-            (keyup.enter)="getRadius(RadiusInput.value)"
+            (keyup.enter)="
+              getRadius(RadiusInput.value); getZip(ZipCodeInput.value)
+            "
+            max="100"
           />
           <div class="input-group-append ml-1 mr-2">
             <button
               class="btn btn-outline-secondary"
-              (click)="getRadius(RadiusInput.value)"
+              (click)="getRadius(RadiusInput.value); getZip(ZipCodeInput.value)"
               type="button"
             >
               Enter

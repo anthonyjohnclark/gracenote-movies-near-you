@@ -12,8 +12,8 @@ export class NavbarComponent implements OnInit {
   radius = 20;
   zipCode: number;
   FormattedDate: string;
-  lat;
-  long;
+  lat = null;
+  long = null;
   cityName;
   isCollapsed = false;
 
@@ -26,6 +26,8 @@ export class NavbarComponent implements OnInit {
     console.log("Default radius is", this.radius);
     console.log("ZipCode entered is", this.zipCode);
   }
+
+  getMovies() {}
 
   getLocation() {
     return new Promise((resolve, reject) => {
@@ -65,12 +67,16 @@ export class NavbarComponent implements OnInit {
     console.log("New user radius is", this.radius);
   }
 
-  getZip(value: number): void {
+  getZip(value: any): void {
     this.zipCode = value;
     console.log("ZipCode entered is", this.zipCode);
-    this.getRadius(this.radius);
-    this.getCoordsByZipCode();
-    this.getCityNameWithZip();
+    if (value === "") {
+      this.getLocation();
+      this.getCityName();
+    } else {
+      this.getCoordsByZipCode();
+      this.getCityNameWithZip();
+    }
   }
 
   getDate() {
