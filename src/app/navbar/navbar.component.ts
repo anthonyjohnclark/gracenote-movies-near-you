@@ -1,6 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { NavbarService } from "./navbar.service";
 
+class NoRadius extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "NoRadius";
+    this.message = message;
+  }
+}
+
 @Component({
   selector: "app-navbar",
   templateUrl: "./navbar.component.html",
@@ -27,8 +35,6 @@ export class NavbarComponent implements OnInit {
     console.log("ZipCode entered is", this.zipCode);
   }
 
-  getMovies() {}
-
   getLocation() {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
@@ -48,7 +54,6 @@ export class NavbarComponent implements OnInit {
 
   async getCityName() {
     const coordinates = await this.getLocation();
-    console.log(coordinates);
     var cityName;
     var lat = coordinates["latitude"];
     var long = coordinates["longitude"];
@@ -62,9 +67,12 @@ export class NavbarComponent implements OnInit {
     this.cityName = cityName;
   }
 
-  getRadius(value: number): void {
-    this.radius = value;
-    console.log("New user radius is", this.radius);
+  getRadius(value: any): void {
+    if (value == "") {
+      throw new NoRadius("Please enter a valid radius.");
+    } else {
+      this.radius = value;
+    }
   }
 
   getZip(value: any): void {

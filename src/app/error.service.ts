@@ -35,6 +35,14 @@ export class ErrorService implements ErrorHandler {
       );
       console.error("Here be an HTTP error Response from LocationIq");
       console.error(error.message);
+    } else if (error.message == "Please enter a valid radius.") {
+      this.alertService.danger("Please enter a valid radius.");
+      console.error(error);
+    } else if (error.error.errorMessage.match("invalid_parameter_value")) {
+      this.alertService.danger(
+        "Looks like you entered too big of a radius. Try keeping it under 100."
+      );
+      console.error(error);
     } else {
       this.alertService.warning("An unknown error has occurred.");
       console.error(error);

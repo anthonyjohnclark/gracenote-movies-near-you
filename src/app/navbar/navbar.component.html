@@ -59,6 +59,7 @@
             type="number"
             class="form-control"
             [ngModel]="radius"
+            maxlength="2"
             #RadiusInput
             (keyup.enter)="
               getRadius(RadiusInput.value); getZip(ZipCodeInput.value)
