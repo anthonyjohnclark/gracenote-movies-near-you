@@ -33,7 +33,7 @@ import { InterceptorService } from "./services/interceptor.service";
     MoviesComponent,
     DetailsComponent,
     NavbarComponent,
-    ErrorComponent
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,8 +43,8 @@ import { InterceptorService } from "./services/interceptor.service";
     CollapseModule.forRoot(),
     CarouselModule.forRoot(),
     ModalModule.forRoot(),
-    AlertModule.forRoot(),
-    AppRoutingModule
+    AlertModule.forRoot({ maxMessages: 2, timeout: 4000, position: "left" }),
+    AppRoutingModule,
   ],
   providers: [
     MoviesService,
@@ -54,15 +54,15 @@ import { InterceptorService } from "./services/interceptor.service";
     BsModalRef,
     {
       provide: ErrorHandler,
-      useClass: ErrorService
+      useClass: ErrorService,
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
-      multi: true
-    }
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DetailsComponent]
+  entryComponents: [DetailsComponent],
 })
 export class AppModule {}

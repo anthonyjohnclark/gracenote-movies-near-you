@@ -9,6 +9,30 @@ class NoRadius extends Error {
   }
 }
 
+class InvalidRadius extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "InvalidRadius";
+    this.message = message;
+  }
+}
+
+class NoGeo extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "NoGeo";
+    this.message = message;
+  }
+}
+
+class InvalidZip extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "InvalidZip";
+    this.message = message;
+  }
+}
+
 @Component({
   selector: "app-navbar",
   templateUrl: "./navbar.component.html",
@@ -37,22 +61,29 @@ export class NavbarComponent implements OnInit {
 
   getLocation() {
     return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(
-        function resolveLocation(position) {
-          var coordinates = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          };
-          resolve(coordinates);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function resolveLocation(position) {
+            var coordinates = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            };
+            resolve(coordinates);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      }
+    }).catch();
   }
 
   async getCityName() {
+    try {
+      await this.getLocation();
+    } catch (error) {
+      throw new NoGeo("Geolocation has not been enabled.");
+    }
     const coordinates = await this.getLocation();
     var cityName;
     var lat = coordinates["latitude"];
@@ -70,6 +101,8 @@ export class NavbarComponent implements OnInit {
   getRadius(value: any): void {
     if (value == "") {
       throw new NoRadius("Please enter a valid radius.");
+    } else if (value > 100) {
+      throw new InvalidRadius("Radius greater than 100.");
     } else {
       this.radius = value;
     }
@@ -111,10 +144,16 @@ export class NavbarComponent implements OnInit {
             reject(err);
           }
         );
-    });
+    }).catch();
   }
 
   async getCityNameWithZip() {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await this.getCoordsByZipCode();
+    } catch (error) {
+      throw new InvalidZip("ZipCode entered is invalid.");
+    }
     const CoordsByZipCode = await this.getCoordsByZipCode();
     console.log(CoordsByZipCode);
     var cityName;

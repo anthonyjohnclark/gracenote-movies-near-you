@@ -15,7 +15,7 @@ export class ErrorService implements ErrorHandler {
       // Promise rejection wrapped by zone.js
       error = error.rejection;
     }
-    if (error.message == "User denied Geolocation") {
+    if (error.message == "Geolocation has not been enabled.") {
       this.alertService.info(
         "Please enter a zip code or enable geolocation to find movies."
       );
@@ -25,11 +25,7 @@ export class ErrorService implements ErrorHandler {
         "We couldn't find any theatres within this radius. Try expanding your radius or entering a new zip code."
       );
       console.error(error);
-    } else if (
-      error.message.match(
-        "Http failure response for https://us1.locationiq.com/"
-      )
-    ) {
+    } else if (error.message == "ZipCode entered is invalid.") {
       this.alertService.danger(
         "Looks like we can't find the zip code you entered. Try enabling your location or entering another zip code."
       );
@@ -38,14 +34,13 @@ export class ErrorService implements ErrorHandler {
     } else if (error.message == "Please enter a valid radius.") {
       this.alertService.danger("Please enter a valid radius.");
       console.error(error);
-    } else if (error.error.errorMessage.match("invalid_parameter_value")) {
-      this.alertService.danger(
+    } else if (error.message == "Radius greater than 100.") {
+      this.alertService.info(
         "Looks like you entered too big of a radius. Try keeping it under 100."
       );
       console.error(error);
     } else {
-      this.alertService.warning("An unknown error has occurred.");
-      console.error(error);
+      console.error(error.message);
     }
 
     router.navigate(["error"]);
